@@ -1,1 +1,52 @@
-spring.application.name=recti
+#feature/sprint0-vicky-boot
+#spring.application.name=recti
+spring:
+  application:
+    name: recti
+  profiles:
+    active: dev  # por defecto levanta dev
+
+# ---- DEV (usa PostgreSQL en Docker de Jaz)
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recti
+    username: recti
+    password: recti
+  jpa:
+    hibernate:
+      ddl-auto: validate   # validamos contra el schema de Flyway
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+# ---- TEST (usa H2 en memoria + modo PostgreSQL)
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:recti_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+# logging opcional m�s limpio en test
+logging:
+  level:
+    root: INFO
+
