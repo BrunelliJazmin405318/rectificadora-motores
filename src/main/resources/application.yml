@@ -1,3 +1,4 @@
+#feature/sprint0-vicky-boot
 #spring.application.name=recti
 spring:
   application:
@@ -44,7 +45,8 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
-# logging opcional más limpio en test
+# logging opcional mï¿½s limpio en test
 logging:
   level:
     root: INFO
+
