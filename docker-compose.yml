@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16
+    container_name: recti_pg
+    environment:
+      POSTGRES_DB: recti
+      POSTGRES_USER: recti
+      POSTGRES_PASSWORD: recti
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./var/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recti -d recti"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
